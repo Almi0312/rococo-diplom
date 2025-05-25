@@ -1,0 +1,22 @@
+services:
+  rococo-all-db:
+    container_name: rococo-all-db
+    image: postgres:15.1
+    environment:
+      - CREATE_DATABASES=rococo-auth,rococo-currency,rococo-spend,rococo-userdata
+      - PGUSER=postgres
+      - POSTGRES_PASSWORD=rocSecret
+      - TZ=GMT+3
+      - PGTZ=GMT+3
+    volumes:
+      - ./postgres/script:/docker-entrypoint-initdb.d
+      - ./postgres/conf/postgresql.conf:/etc/postgresql.conf
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres", "-d", "postgres" ]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+    ports:
+      - 5432:5432
+    networks:
+      - rococo-network
