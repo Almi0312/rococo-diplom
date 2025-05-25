@@ -1,8 +1,12 @@
 !/bin/bash
 #before create volume rococo_pgdata
 #after enter script for run:
-# chmod +x runLocalServices.sh
-# ./runLocalServices.sh
+# chmod +x dockerLocalStart.sh
+# ./dockerLocalStart.sh
+
+#Also need add on edit configuration for spring services in VM option:
+# -Dspring.profiles.active=local
+
 POSTGRES_IMAGE="postgres:15.1"
 
 docker stop $(docker ps -a -q)
